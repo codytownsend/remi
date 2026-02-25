@@ -1,0 +1,27 @@
+{
+  "name": "REMI Services - NSPIRE & HUD Pre-Inspection",
+  "short_name": "REMI Services",
+  "description": "Expert NSPIRE and HUD pre-inspection services for multifamily properties",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#022C22",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "favi.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "favi.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity"],
+  "lang": "en-US",
+  "dir": "ltr"
+}

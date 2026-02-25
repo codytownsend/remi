@@ -1,0 +1,19 @@
+# robots.txt for REMI Services
+# https://remisrvcs.com/robots.txt
+
+User-agent: *
+Allow: /
+Disallow: /thank-you.html
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 10
+
+# Sitemap location
+Sitemap: https://remisrvcs.com/sitemap.xml
+
+# Block specific bad bots (optional)
+User-agent: AhrefsBot
+Crawl-delay: 30
+
+User-agent: SemrushBot
+Crawl-delay: 30
