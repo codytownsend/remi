@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REMI – SMS Sign Up</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #1a2b45;
+      --gold: #c49a3c;
+      --gold-light: #e8c46a;
+      --cream: #f9f6f0;
+      --white: #ffffff;
+      --gray: #6b7280;
+      --gray-light: #e5e7eb;
+      --red: #dc2626;
+      --success: #166534;
+      --success-bg: #dcfce7;
+    }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      background: var(--cream);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: 4px;
+      box-shadow: 0 4px 32px rgba(26,43,69,0.10), 0 1px 4px rgba(26,43,69,0.06);
+      max-width: 520px;
+      width: 100%;
+      overflow: hidden;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-header {
+      background: var(--navy);
+      padding: 2.2rem 2.5rem 1.8rem;
+      border-bottom: 3px solid var(--gold);
+    }
+
+    .logo-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--gold);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .logo-icon svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--navy);
+    }
+
+    .company-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--gold-light);
+      letter-spacing: 0.04em;
+      line-height: 1.2;
+    }
+
+    .card-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.55rem;
+      color: var(--white);
+      line-height: 1.3;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-header p {
+      font-size: 0.92rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.55;
+    }
+
+    .card-body {
+      padding: 2rem 2.5rem 2.5rem;
+    }
+
+    .field {
+      margin-bottom: 1.25rem;
+    }
+
+    label.field-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--navy);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 0.4rem;
+    }
+
+    input[type="text"],
+    input[type="tel"] {
+      width: 100%;
+      padding: 0.7rem 0.9rem;
+      border: 1.5px solid var(--gray-light);
+      border-radius: 3px;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.97rem;
+      color: var(--navy);
+      background: var(--white);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+
+    input[type="text"]:focus,
+    input[type="tel"]:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(196,154,60,0.13);
+    }
+
+    input.error {
+      border-color: var(--red);
+    }
+
+    .field-error {
+      font-size: 0.78rem;
+      color: var(--red);
+      margin-top: 0.3rem;
+      display: none;
+    }
+
+    .field-error.visible {
+      display: block;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--gray-light);
+      margin: 1.5rem 0 1.25rem;
+    }
+
+    .consent-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--navy);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 0.9rem;
+      display: block;
+    }
+
+    .checkbox-field {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      align-items: flex-start;
+    }
+
+    .checkbox-field input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      border: 1.5px solid var(--gray-light);
+      border-radius: 2px;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+      background: var(--white);
+    }
+
+    .checkbox-field input[type="checkbox"]:checked {
+      background: var(--navy);
+      border-color: var(--navy);
+    }
+
+    .checkbox-field input[type="checkbox"]:checked::after {
+      content: '';
+      position: absolute;
+      left: 4px;
+      top: 1px;
+      width: 6px;
+      height: 10px;
+      border: 2px solid var(--white);
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg);
+    }
+
+    .checkbox-field input[type="checkbox"]:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(196,154,60,0.18);
+    }
+
+    .checkbox-text {
+      font-size: 0.78rem;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+
+    .checkbox-text a {
+      color: var(--navy);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .checkbox-text a:hover {
+      color: var(--gold);
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 0.85rem;
+      background: var(--navy);
+      color: var(--white);
+      border: none;
+      border-radius: 3px;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin-top: 1.5rem;
+      transition: background 0.2s, transform 0.15s;
+      position: relative;
+    }
+
+    .submit-btn:hover {
+      background: #243d5e;
+    }
+
+    .submit-btn:active {
+      transform: scale(0.99);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .spinner {
+      display: none;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      position: absolute;
+      right: 1.2rem;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    @keyframes spin {
+      to { transform: translateY(-50%) rotate(360deg); }
+    }
+
+    .success-message {
+      display: none;
+      background: var(--success-bg);
+      border: 1px solid #86efac;
+      border-radius: 3px;
+      padding: 1rem 1.2rem;
+      margin-top: 1.25rem;
+      font-size: 0.88rem;
+      color: var(--success);
+      line-height: 1.5;
+    }
+
+    .success-message.visible {
+      display: block;
+      animation: fadeUp 0.3s ease both;
+    }
+
+    .privacy-note {
+      font-size: 0.74rem;
+      color: var(--gray);
+      text-align: center;
+      margin-top: 1.2rem;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <div class="card-header">
+    <div class="logo-row">
+      <a class="navbar-brand" href="#"><img src="images/logo.png" alt="REMI Services"></a>
+    </div>
+    <h1>Stay Ahead of Your HUD Inspection</h1>
+    <p>Sign up to receive updates about our pre-NSPIRE inspection services and protect your property from costly violations.</p>
+  </div>
+
+  <div class="card-body">
+    <form id="signup-form" novalidate>
+
+      <div class="field">
+        <label class="field-label" for="name">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="Jane Smith" autocomplete="name">
+        <div class="field-error" id="name-error">Please enter your full name.</div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" placeholder="(555) 000-0000" autocomplete="tel">
+        <div class="field-error" id="phone-error">Please enter a valid US phone number.</div>
+      </div>
+
+      <hr class="divider">
+
+      <span class="consent-label">SMS Consent</span>
+
+      <div class="checkbox-field">
+        <input type="checkbox" id="transactional" name="transactional">
+        <label class="checkbox-text" for="transactional">
+          By checking this box, I consent to receive <strong>transactional text messages</strong> from Property Preservation Services regarding pre-NSPIRE inspection services, scheduling, and compliance updates. Reply STOP to opt out. Reply HELP for help. Standard message and data rates may apply. Message frequency may vary. View our <a href="/terms-and-conditions.html" target="_blank">Terms and Conditions</a> and <a href="/privacy-policy.html" target="_blank">Privacy Policy</a>.
+        </label>
+      </div>
+
+      <div class="checkbox-field">
+        <input type="checkbox" id="marketing" name="marketing">
+        <label class="checkbox-text" for="marketing">
+          By checking this box, I consent to receive <strong>marketing text messages</strong> from Property Preservation Services about promotions, service offerings, and industry updates. Reply STOP to opt out. Reply HELP for help. Standard message and data rates may apply. Message frequency may vary. View our <a href="/terms-and-conditions.html" target="_blank">Terms and Conditions</a> and <a href="/privacy-policy.html" target="_blank">Privacy Policy</a>.
+        </label>
+      </div>
+
+      <div class="field-error" id="consent-error" style="margin-top: -0.5rem;">Please check at least one consent box to continue.</div>
+
+      <button type="submit" class="submit-btn" id="submit-btn">
+        Submit
+        <span class="spinner" id="spinner"></span>
+      </button>
+
+      <div class="success-message" id="success-msg">
+        ✓ You're signed up. We'll be in touch shortly regarding your pre-NSPIRE inspection options. Reply STOP at any time to opt out of messages.
+      </div>
+
+      <p class="privacy-note">Your information is secure and will never be shared with third parties for promotional or marketing purposes.</p>
+
+    </form>
+  </div>
+</div>
+
+<script>
+  const form = document.getElementById('signup-form');
+  const nameInput = document.getElementById('name');
+  const phoneInput = document.getElementById('phone');
+  const submitBtn = document.getElementById('submit-btn');
+  const spinner = document.getElementById('spinner');
+  const successMsg = document.getElementById('success-msg');
+
+  // Phone formatting
+  phoneInput.addEventListener('input', function () {
+    let val = this.value.replace(/\D/g, '').slice(0, 10);
+    if (val.length >= 7) {
+      val = '(' + val.slice(0,3) + ') ' + val.slice(3,6) + '-' + val.slice(6);
+    } else if (val.length >= 4) {
+      val = '(' + val.slice(0,3) + ') ' + val.slice(3);
+    } else if (val.length > 0) {
+      val = '(' + val;
+    }
+    this.value = val;
+  });
+
+  function showError(inputEl, errorId) {
+    inputEl.classList.add('error');
+    document.getElementById(errorId).classList.add('visible');
+  }
+
+  function clearError(inputEl, errorId) {
+    inputEl.classList.remove('error');
+    document.getElementById(errorId).classList.remove('visible');
+  }
+
+  function validatePhone(val) {
+    return val.replace(/\D/g, '').length === 10;
+  }
+
+  nameInput.addEventListener('input', () => clearError(nameInput, 'name-error'));
+  phoneInput.addEventListener('input', () => clearError(phoneInput, 'phone-error'));
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    let valid = true;
+
+    clearError(nameInput, 'name-error');
+    clearError(phoneInput, 'phone-error');
+    document.getElementById('consent-error').classList.remove('visible');
+
+    if (!nameInput.value.trim()) {
+      showError(nameInput, 'name-error');
+      valid = false;
+    }
+
+    if (!validatePhone(phoneInput.value)) {
+      showError(phoneInput, 'phone-error');
+      valid = false;
+    }
+
+    const transactional = document.getElementById('transactional').checked;
+    const marketing = document.getElementById('marketing').checked;
+
+    if (!transactional && !marketing) {
+      document.getElementById('consent-error').classList.add('visible');
+      valid = false;
+    }
+
+    if (!valid) return;
+
+    // Simulate submission
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+    spinner.style.display = 'block';
+
+    setTimeout(() => {
+      spinner.style.display = 'none';
+      submitBtn.style.display = 'none';
+      successMsg.classList.add('visible');
+
+      // Log to console for now -- replace with your actual API call
+      console.log({
+        name: nameInput.value.trim(),
+        phone: phoneInput.value.replace(/\D/g, ''),
+        transactional,
+        marketing,
+        timestamp: new Date().toISOString()
+      });
+    }, 1200);
+  });
+</script>
+
+</body>
+</html>
